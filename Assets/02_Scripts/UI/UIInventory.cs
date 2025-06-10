@@ -18,8 +18,8 @@ public class UIInventory : UIBase<UIInventory>, IUIBase
     [SerializeField] private Image InteractionImg;
 
     private string optionTxt;
-    
-    public InventorySlot SelectedItem { get; private set; }
+
+    public InventorySlot SelectedItem;// { get; private set; }
     public Dictionary<ItemType, int> Equipped  { get; private set; }
     
     #endregion
@@ -61,6 +61,7 @@ public class UIInventory : UIBase<UIInventory>, IUIBase
         itemType.text = "";
         itemOption.text = "";
         itemDescription.text = "";
+        InteractionTxt.text = "";
         
         base.Close();
     }
@@ -84,6 +85,7 @@ public class UIInventory : UIBase<UIInventory>, IUIBase
         InteractionImg.enabled = true;
         SelectedItem = item;
         ShowItemInfo();
+        UpdateInteractionText();
     }
     
     private void ShowItemInfo()
@@ -123,12 +125,42 @@ public class UIInventory : UIBase<UIInventory>, IUIBase
         if (Equipped.ContainsKey(type))
         {
             int prevIndex = Equipped[type];
+            if (prevIndex == currentIndex)
+            {
+                inventorySlots[prevIndex].DisableOutline();
+                Equipped.Remove(type);
+                UpdateInteractionText();
+                return;
+            }
+
             inventorySlots[prevIndex].DisableOutline();
         }
 
         inventorySlots[currentIndex].EnableOutline();
         Equipped[type] = currentIndex;
-
         SelectedItem.EquipItem();
+        UpdateInteractionText();
+        UIStatus.Instance.Initialize();
+    }
+    
+    private void UpdateInteractionText()
+    {
+        if (SelectedItem == null || SelectedItem.IsEmpty)
+        {
+            InteractionTxt.text = "";
+            return;
+        }
+
+        ItemType type = SelectedItem.InventoryItem.ItemType;
+        int selectedIndex = SelectedItem.Index;
+
+        if (Equipped.ContainsKey(type) && Equipped[type] == selectedIndex)
+        {
+            InteractionTxt.text = "Unequip";
+        }
+        else
+        {
+            InteractionTxt.text = "Equip";
+        }
     }
 }

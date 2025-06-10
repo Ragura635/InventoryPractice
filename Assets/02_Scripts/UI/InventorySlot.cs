@@ -104,12 +104,12 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IBeginDragHandler, IDr
     public void EnableOutline()
     {
         if (outline != null)
-            outline.enabled = true;
+            outline.gameObject.SetActive(true);
     }
 
     public void DisableOutline()
     {
         if (outline != null)
-            outline.enabled = false;
+            outline.gameObject.SetActive(false);
     }
 }

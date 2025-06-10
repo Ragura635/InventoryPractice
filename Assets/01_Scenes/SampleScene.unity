@@ -645,6 +645,7 @@ MonoBehaviour:
   itemDescription: {fileID: 698169234}
   InteractionTxt: {fileID: 1452478199}
   InteractionImg: {fileID: 2040375018}
+  SelectedItem: {fileID: 0}
 --- !u!1 &122177497
 GameObject:
   m_ObjectHideFlags: 0
@@ -16006,6 +16007,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiContainer: {fileID: 2147079930}
   ExitBtn: {fileID: 1275222367}
+  levelTxt: {fileID: 1284346314}
+  curExpTxt: {fileID: 342959959}
+  maxExpTxt: {fileID: 1604628675}
+  expGuage: {fileID: 275368856}
+  curHpTxt: {fileID: 756931063}
+  maxHpTxt: {fileID: 2092378959}
+  hpGuage: {fileID: 299624252}
+  curAtkTxt: {fileID: 1553047767}
+  deltaAtkTxt: {fileID: 651479395}
+  curDefTxt: {fileID: 1690237008}
+  deltaDefTxt: {fileID: 1852532254}
+  curCrtTxt: {fileID: 172066499}
+  deltaCrtTxt: {fileID: 736770100}
+  curSpdTxt: {fileID: 1739805121}
+  deltaSpdTxt: {fileID: 1061178369}
 --- !u!1 &651479393
 GameObject:
   m_ObjectHideFlags: 0
@@ -17931,7 +17947,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &921516519
 RectTransform:
   m_ObjectHideFlags: 0
@@ -21364,6 +21380,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e45584bc7e0116649a31ea328136460c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  level: 1
 --- !u!1 &1644869320
 GameObject:
   m_ObjectHideFlags: 0

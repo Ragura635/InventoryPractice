@@ -8,7 +8,7 @@ public class InputHandler : MonoBehaviour
     {
         if (context.started)
         {
-            UIManager.Instance.CheckOpenPopup(UIStatus.Instance);
+            UIMainMenu.Instance.OnClickStatusMenu();
         }
     }
     
@@ -16,7 +16,7 @@ public class InputHandler : MonoBehaviour
     {
         if (context.started)
         {
-            UIManager.Instance.CheckOpenPopup(UIInventory.Instance);
+            UIMainMenu.Instance.OnClickInventoryMenu();
         }
     }
     
