@@ -23,14 +23,12 @@ public class UIManager : Singleton<UIManager>
     {
         openedUI.Add(panel);
         IsOpenUI = true;
-        Cursor.lockState = CursorLockMode.None;
     }
 
     public void ClosePanel(IUIBase panel)
     {
         openedUI.Remove(panel);
         IsOpenUI = false;
-        Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void AllClosePanel()

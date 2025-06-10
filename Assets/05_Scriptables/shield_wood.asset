@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86acf2f81fbb10640aacb02a93bb9bd5, type: 3}
+  m_Name: shield_wood
+  m_EditorClassIdentifier: 
+  ItemName: "\uB098\uBB34 \uBC29\uD328"
+  ItemType: 1
+  ItemSprite: {fileID: 21300000, guid: 0049823b5300a6c40b5a0f5b990052b9, type: 3}
+  ItemDescription: "\uB098\uBB34\uB85C \uB9CC\uB4E0 \uBC29\uD328"
+  Option:
+  - stat: 1
+    value: 10

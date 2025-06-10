@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class UIBase<T> : Singleton<T> where T : UIBase<T>, IUIBase
 {
+    [Header("UIBase")]
     [SerializeField] private GameObject uiContainer;
     
     public virtual void Open()

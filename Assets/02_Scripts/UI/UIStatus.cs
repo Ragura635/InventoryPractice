@@ -1,18 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class UIStatus : MonoBehaviour
+public class UIStatus : UIBase<UIStatus>, IUIBase
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private Button ExitBtn;
+    
+    protected override void Awake()
     {
+        base.Awake();
         
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (ExitBtn != null)
+            ExitBtn.onClick.AddListener(UIMainMenu.Instance.OnClickStatusMenu);
     }
 }
