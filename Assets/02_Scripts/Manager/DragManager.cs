@@ -3,17 +3,27 @@ using UnityEngine.UI;
 
 public class DragManager : Singleton<DragManager>
 {
+    #region [Inspector]
     public InventorySlot DraggedInventoryItem { get; private set; }
     [SerializeField] private Image dragImage;
     
     public bool IsDragging { get; private set; }
 
+    #endregion
+    
+    
+    #region [LifeCycle]
     protected override void Awake()
     {
         base.Awake();
         dragImage.gameObject.SetActive(false);
     }
-
+    
+    #endregion
+    
+    
+    // 구현 실패
+    #region [ing...]
     public void StartDrag(InventorySlot slot, Transform source)
     {
         if (slot.InventoryItem == null)
@@ -44,4 +54,6 @@ public class DragManager : Singleton<DragManager>
         dragImage.transform.SetAsLastSibling();
         IsDragging = true;
     }
+    
+    #endregion
 }

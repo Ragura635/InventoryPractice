@@ -3,7 +3,6 @@ using UnityEngine.InputSystem;
 
 public class InputHandler : MonoBehaviour
 {
-    
     public void OnOpenStatus(InputAction.CallbackContext context)
     {
         if (context.started)

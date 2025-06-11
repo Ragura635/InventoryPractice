@@ -19,7 +19,7 @@ public class UIInventory : UIBase<UIInventory>, IUIBase
 
     private string optionTxt;
 
-    public InventorySlot SelectedItem;// { get; private set; }
+    public InventorySlot SelectedItem { get; private set; }
     public Dictionary<ItemType, int> Equipped  { get; private set; }
     
     #endregion
@@ -43,10 +43,6 @@ public class UIInventory : UIBase<UIInventory>, IUIBase
         InventoryManager.Instance.OnInventorySlotUpdate += UpdateInventorySlot;
     }
     
-    #endregion
-    
-    
-    #region [Override]
     public override void Open()
     {
         InitializeSlots();
@@ -56,19 +52,15 @@ public class UIInventory : UIBase<UIInventory>, IUIBase
     public override void Close()
     {
         SelectedItem?.DeSelectedSlot();
-        SelectedItem = null;
-        itemName.text = "";
-        itemType.text = "";
-        itemOption.text = "";
-        itemDescription.text = "";
-        InteractionTxt.text = "";
-        
+        ResetItemInfo();
         base.Close();
     }
-
+    
     #endregion
     
-
+    
+    #region [method]
+    // 보유 아이템 기반 인벤토리 슬롯 초기화
     private void InitializeSlots()
     {
         for (int i = 0; i < inventorySlots.Length; i++)
@@ -77,6 +69,17 @@ public class UIInventory : UIBase<UIInventory>, IUIBase
         }
     }
     
+    private void UpdateInventorySlot(int index)
+    {
+        if (index < 0 || index >= inventorySlots.Length)
+            return;
+
+        ItemSO itemData = InventoryManager.Instance.Inventory[index];
+
+        inventorySlots[index].SetItem(index, itemData);
+    }
+    
+    // 아이템 선택 및 설명 텍스트 변경
     public void SelectItem(InventorySlot item)
     {
         if (SelectedItem != null && SelectedItem != item)
@@ -85,6 +88,14 @@ public class UIInventory : UIBase<UIInventory>, IUIBase
         InteractionImg.enabled = true;
         SelectedItem = item;
         ShowItemInfo();
+        UpdateInteractionText();
+    }
+    
+    public void DeselectItem()
+    {
+        InteractionImg.enabled = false;
+        SelectedItem = null;
+        ResetItemInfo();
         UpdateInteractionText();
     }
     
@@ -102,45 +113,15 @@ public class UIInventory : UIBase<UIInventory>, IUIBase
         itemOption.text = optionTxt;
         itemDescription.text = SelectedItem.InventoryItem.ItemDescription;
     }
-    
-    private void UpdateInventorySlot(int index)
+
+    private void ResetItemInfo()
     {
-        if (index < 0 || index >= inventorySlots.Length)
-            return;
-
-        ItemSO itemData = InventoryManager.Instance.Inventory[index];
-
-        inventorySlots[index].SetItem(index, itemData);
-    }
-    
-    public void EquipSelectedItem()
-    {
-        if (SelectedItem == null || SelectedItem.IsEmpty)
-            return;
-
-        ItemSO item = SelectedItem.InventoryItem;
-        ItemType type = item.ItemType;
-        int currentIndex = SelectedItem.Index;
-
-        if (Equipped.ContainsKey(type))
-        {
-            int prevIndex = Equipped[type];
-            if (prevIndex == currentIndex)
-            {
-                inventorySlots[prevIndex].DisableOutline();
-                Equipped.Remove(type);
-                UpdateInteractionText();
-                return;
-            }
-
-            inventorySlots[prevIndex].DisableOutline();
-        }
-
-        inventorySlots[currentIndex].EnableOutline();
-        Equipped[type] = currentIndex;
-        SelectedItem.EquipItem();
-        UpdateInteractionText();
-        UIStatus.Instance.Initialize();
+        SelectedItem = null;
+        itemName.text = "";
+        itemType.text = "";
+        itemOption.text = "";
+        itemDescription.text = "";
+        InteractionTxt.text = "";
     }
     
     private void UpdateInteractionText()
@@ -163,4 +144,38 @@ public class UIInventory : UIBase<UIInventory>, IUIBase
             InteractionTxt.text = "Equip";
         }
     }
+    
+    // 아이템 장착 & 해제
+    public void EquipSelectedItem()
+    {
+        if (SelectedItem == null || SelectedItem.IsEmpty)
+            return;
+
+        ItemSO item = SelectedItem.InventoryItem;
+        ItemType type = item.ItemType;
+        int currentIndex = SelectedItem.Index;
+
+        if (Equipped.ContainsKey(type))
+        {
+            int prevIndex = Equipped[type];
+            if (prevIndex == currentIndex)
+            {
+                inventorySlots[prevIndex].DisableOutline();
+                Equipped.Remove(type);
+                UpdateInteractionText();
+                UIStatus.Instance.Initialize();
+                return;
+            }
+
+            inventorySlots[prevIndex].DisableOutline();
+        }
+
+        inventorySlots[currentIndex].EnableOutline();
+        Equipped[type] = currentIndex;
+        SelectedItem.EquipItem();
+        UpdateInteractionText();
+        UIStatus.Instance.Initialize();
+    }
+    
+    #endregion
 }

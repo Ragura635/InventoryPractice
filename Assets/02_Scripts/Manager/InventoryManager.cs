@@ -3,19 +3,27 @@ using UnityEngine;
 
 public class InventoryManager : Singleton<InventoryManager>
 {
+    #region [Inspector]
     [SerializeField] private ItemSO[] inventory;
     
+    public event Action<int> OnInventorySlotUpdate;
     public ItemSO[] Inventory { get => inventory; set => inventory = value; }
 
-    public event Action<int> OnInventorySlotUpdate;
-
+    #endregion
+    
+    
+    #region [LifeCycle]
     protected override void Awake()
     {
         base.Awake();
         Inventory = inventory;
     }
     
-    public void UseItem(int index, int amount = 1)
+    #endregion
+    
+    
+    #region [method]
+    public void UseItem(int index)
     {
         ItemSO inventoryItem = Inventory[index];
 
@@ -24,19 +32,21 @@ public class InventoryManager : Singleton<InventoryManager>
             return;
         }
 
-        bool canUse = true;
-        if (!canUse)
-            return;
-
         OnInventorySlotUpdate?.Invoke(index);
     }
-
+    
+    #endregion
+    
+    
+    // 구현 실패
+    #region [ing...]
     public void SwichItem(int from, int to)
     {
         (Inventory[from], Inventory[to]) = (Inventory[to], Inventory[from]);
-
-
+        
         OnInventorySlotUpdate?.Invoke(from);
         OnInventorySlotUpdate?.Invoke(to);
     }
+    
+    #endregion
 }

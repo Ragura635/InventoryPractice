@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class UIStatus : UIBase<UIStatus>, IUIBase
 {
+    #region [Inspector]
     [SerializeField] private Button ExitBtn;
     [SerializeField] private TextMeshProUGUI levelTxt;
     [SerializeField] private TextMeshProUGUI curExpTxt;
@@ -24,7 +25,10 @@ public class UIStatus : UIBase<UIStatus>, IUIBase
     [SerializeField] private TextMeshProUGUI curSpdTxt;
     [SerializeField] private TextMeshProUGUI deltaSpdTxt;
     
+    #endregion
     
+    
+    #region [LifeCycle]
     protected override void Awake()
     {
         base.Awake();
@@ -44,6 +48,11 @@ public class UIStatus : UIBase<UIStatus>, IUIBase
         base.Close();
     }
     
+    #endregion
+    
+    
+    #region [Method]
+    // 스탯 초기화 및 텍스트 갱신
     public void Initialize()
     {
         StatManager.Instance.InitializeStats();
@@ -79,7 +88,6 @@ public class UIStatus : UIBase<UIStatus>, IUIBase
         maxHpTxt.text = maxHp.ToString();
         hpGuage.fillAmount = (float)curHp / maxHp;
 
-        // 5. 스탯 표시 (base + delta)
         DisplayStat(StatManager.Instance.BaseStat(StatType.ATK), delta, StatType.ATK, curAtkTxt, deltaAtkTxt);
         DisplayStat(StatManager.Instance.BaseStat(StatType.DEF), delta, StatType.DEF, curDefTxt, deltaDefTxt);
         DisplayStat(StatManager.Instance.BaseStat(StatType.CRT), delta, StatType.CRT, curCrtTxt, deltaCrtTxt);
@@ -104,4 +112,7 @@ public class UIStatus : UIBase<UIStatus>, IUIBase
             deltaTxt.text = $"<color={color}>({sign}{deltaVal})</color>";
         }
     }
+    
+    #endregion
+    
 }
